@@ -8,3 +8,5 @@ def moyenne():
 
 if __name__ == "__main__":
     print("Temperature moyenne :", moyenne())
+
+releves.append({"ville": "Marseille", "temperature": 27})
