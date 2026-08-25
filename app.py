@@ -1,6 +1,6 @@
 releves = [
     {"ville": "Paris", "temperature": 21},
-    {"ville": "Lyon", "temperature": 24},
+    {"ville": "Lyon", "temperature": 26},
 ]
 
 def moyenne():
