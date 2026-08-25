@@ -1,0 +1,11 @@
+# Secrets
+.env
+
+# Dependances Python
+venv/
+__pycache__/
+*.pyc
+
+# Bruit systeme
+.DS_Store
+Thumbs.db
