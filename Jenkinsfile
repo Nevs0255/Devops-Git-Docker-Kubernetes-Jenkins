@@ -58,8 +58,10 @@ pipeline {
                 }
             }
         }
-
         stage('Deployer') {
+            when {
+                branch 'main'
+            }
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig-kind', variable: 'KUBECONFIG')]) {
                     sh '''
@@ -70,6 +72,7 @@ pipeline {
                 }
             }
         }
+
     }
 
     post {
