@@ -1,0 +1,10 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 30080   # le NodePort dans le cluster
+        hostPort: 8080         # le port sur TA machine
+        protocol: TCP
+  - role: worker
+  - role: worker

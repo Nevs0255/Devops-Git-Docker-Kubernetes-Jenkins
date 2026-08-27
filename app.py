@@ -34,7 +34,7 @@ def lire_releves():
 
 @app.get("/sante")
 def sante():
-    return jsonify({"statut": "ok", "version": "2"})
+    return jsonify({"statut": "ok", "version": "3.0"})
 
 
 @app.get("/releves")

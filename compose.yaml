@@ -5,7 +5,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql://postgres:motdepasse@db:5432/meteo
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/meteo
     depends_on:
       db:
         condition: service_healthy
@@ -14,7 +14,7 @@ services:
   db:
     image: postgres:16-alpine
     environment:
-      POSTGRES_PASSWORD: motdepasse
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: meteo
     volumes:
       - donnees-pg:/var/lib/postgresql/data

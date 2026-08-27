@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meteo-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: meteo-db
+  template:
+    metadata:
+      labels:
+        app: meteo-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: meteo
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: meteo-secret
+                  key: postgres_password
+          volumeMounts:
+            - name: init
+              mountPath: /docker-entrypoint-initdb.d
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "postgres", "-d", "meteo"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      volumes:
+        - name: init
+          configMap:
+            name: meteo-init
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: meteo-db
+spec:
+  type: ClusterIP
+  selector:
+    app: meteo-db
+  ports:
+    - port: 5432
+      targetPort: 5432

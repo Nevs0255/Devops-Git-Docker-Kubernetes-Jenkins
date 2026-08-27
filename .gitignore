@@ -9,3 +9,4 @@ __pycache__/
 # Bruit systeme
 .DS_Store
 Thumbs.db
+.env
