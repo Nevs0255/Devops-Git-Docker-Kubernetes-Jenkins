@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE = "/meteo-api"
+        IMAGE = "nevs025/meteo-api"
         TAG   = "${env.BUILD_NUMBER}"
     }
 
