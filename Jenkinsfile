@@ -17,13 +17,25 @@ pipeline {
     }
 
     stages {
-
         stage('Tester') {
             steps {
                 echo "Tests de la revision ${env.GIT_COMMIT?.take(7)}"
+
                 sh 'docker build --target test -t meteo-api:test-$TAG .'
+
+                sh '''
+                    docker rm -f meteo-tests-$TAG 2>/dev/null || true
+                    docker create --name meteo-tests-$TAG meteo-api:test-$TAG \
+                      python -m pytest -q --junitxml=/tmp/rapport.xml
+                    docker start -a meteo-tests-$TAG || true
+                    docker cp meteo-tests-$TAG:/tmp/rapport.xml rapport.xml
+                    docker rm -f meteo-tests-$TAG
+                '''
+
+                junit 'rapport.xml'
             }
         }
+
 
         stage('Construire') {
             steps {
